@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Local apps
-    'backend.apps.chat',
-    'backend.apps.document',
+    'backend.apps.chat.apps.ChatConfig',
+    'backend.apps.document.apps.DocumentConfig',
 ]
 
 MIDDLEWARE = [
