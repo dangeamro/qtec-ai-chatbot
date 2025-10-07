@@ -45,22 +45,17 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
 
 ### Upload a document
 
--   **Endpoint:** `POST /api/document/documents/`
+-   **Endpoint:** `POST /api/document/`
 -   **Method:** `POST`
 -   **Body:** `multipart/form-data` with a `file` field containing the `.txt` file.
 
-### Create a chat session
-
--   **Endpoint:** `POST /api/chat/sessions/`
--   **Method:** `POST`
-
 ### Send a message
 
--   **Endpoint:** `POST /api/chat/sessions/<session-id>/send_message/`
+-   **Endpoint:** `POST /api/chat/`
 -   **Method:** `POST`
--   **Body:** `{"message": "Your message here"}`
+-   **Body:** `{"session_id": <session-id (optional)>, "message": "Your message here"}`
 
 ### Get chat history
 
--   **Endpoint:** `GET /api/chat/sessions/<session-id>/messages/`
+-   **Endpoint:** `GET /api/session/<id>/messages/`
 -   **Method:** `GET`

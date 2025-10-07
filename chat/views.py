@@ -1,20 +1,20 @@
-from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework import generics
 from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 from .models import ChatSession, ChatMessage
-from .serializers import ChatSessionSerializer, ChatMessageSerializer
+from .serializers import ChatMessageSerializer
 from .graph import get_graph
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, AIMessage
 
-class ChatSessionViewSet(viewsets.ModelViewSet):
-    queryset = ChatSession.objects.all()
-    serializer_class = ChatSessionSerializer
-
-    @action(detail=True, methods=['post'])
-    def send_message(self, request, pk=None):
-        session = self.get_object()
+class ChatView(generics.GenericAPIView):
+    def post(self, request, *args, **kwargs):
+        session_id = request.data.get('session_id')
         message_text = request.data.get('message')
+
+        if session_id:
+            session = ChatSession.objects.get(pk=session_id)
+        else:
+            session = ChatSession.objects.create()
 
         # Save user message
         ChatMessage.objects.create(session=session, message=message_text, is_user=True)
@@ -37,13 +37,9 @@ class ChatSessionViewSet(viewsets.ModelViewSet):
 
         return StreamingHttpResponse(stream_response())
 
-class ChatMessageViewSet(viewsets.ModelViewSet):
-    queryset = ChatMessage.objects.all()
+class SessionMessageView(generics.ListAPIView):
     serializer_class = ChatMessageSerializer
 
-    @action(detail=True, methods=['get'])
-    def messages(self, request, pk=None):
-        session = ChatSession.objects.get(pk=pk)
-        messages = session.messages.all()
-        serializer = ChatMessageSerializer(messages, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        session_id = self.kwargs['id']
+        return ChatMessage.objects.filter(session_id=session_id).order_by('created_at')

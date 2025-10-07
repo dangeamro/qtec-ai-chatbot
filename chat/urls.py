@@ -1,12 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ChatSessionViewSet, ChatMessageViewSet
-
-router = DefaultRouter()
-router.register(r'sessions', ChatSessionViewSet)
-router.register(r'messages', ChatMessageViewSet)
+from django.urls import path
+from .views import ChatView, SessionMessageView
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('sessions/<int:pk>/send_message/', ChatSessionViewSet.as_view({'post': 'send_message'}), name='send-message'),
+    path('', ChatView.as_view(), name='chat'),
+    path('session/<int:id>/messages/', SessionMessageView.as_view(), name='session-messages'),
 ]

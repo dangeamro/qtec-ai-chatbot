@@ -1,9 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import generics
 from .models import Document
 from .serializers import DocumentSerializer
 from .retriever import retriever
 
-class DocumentViewSet(viewsets.ModelViewSet):
+class DocumentUploadView(generics.CreateAPIView):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 
