@@ -28,9 +28,9 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Create a `.env` file** and add your `GROQ_API_KEY`:
+4.  **Create a `.env` file** and add your `GOOGLE_API_KEY`:
     ```
-    GROQ_API_KEY=<your-api-key>
+    GOOGLE_API_KEY=<your-api-key>
     ```
 5.  **Run the database migrations:**
     ```bash
