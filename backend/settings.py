@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dwiof4i6%)qpb#u9lycp*93w$+qf(*$7t1l6dn54opr2k)d@hc'
+SECRET_KEY = 'django-insecure-g#kcq_y)t(z@^x)qg=g9cjh8+b)@@rh$jm3jpxw&rb))w4t3_4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Local apps
-    'apps.chat.apps.ChatConfig',
-    'apps.document.apps.DocumentConfig',
+    'chat',
+    'document',
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 # Database
