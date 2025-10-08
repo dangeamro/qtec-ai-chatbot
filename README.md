@@ -13,6 +13,15 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
 -   **Document Retrieval:** The chatbot can retrieve relevant information from the uploaded documents to answer questions.
 -   **Real-time Streaming:** The AI's response is streamed in real-time.
 
+## Prerequisites
+
+Before you begin, ensure you have the following software installed on your system:
+
+-   **Git:** Download and install from [git-scm.com](https://git-scm.com/downloads).
+-   **Python 3.8+:** Download and install from [python.org](https://www.python.org/downloads/).
+-   **PostgreSQL:** Download and install from [postgresql.org](https://www.postgresql.org/download/).
+-   **VS Code:** Download and install from [code.visualstudio.com](https://code.visualstudio.com/download).
+
 ## Setup Instructions
 
 1.  **Clone the repository:**
