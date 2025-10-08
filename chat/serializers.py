@@ -10,3 +10,7 @@ class ChatSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatSession
         fields = '__all__'
+
+class ChatInputSerializer(serializers.Serializer):
+    session_id = serializers.IntegerField(required=False)
+    message = serializers.CharField(required=True)

@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
+from chat.views import SessionMessageView
 
 urlpatterns = [
     path('', RedirectView.as_view(url='admin/', permanent=False)),
     path('admin/', admin.site.urls),
     path('api/document/', include('document.urls')),
     path('api/chat/', include('chat.urls')),
-    path('api/session/<int:id>/messages/', include('chat.urls')),
+    path('api/session/<int:id>/messages/', SessionMessageView.as_view(), name='session-messages'),
 ]

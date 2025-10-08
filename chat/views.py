@@ -2,18 +2,25 @@ from rest_framework import generics
 from rest_framework.response import Response
 from django.http import StreamingHttpResponse
 from .models import ChatSession, ChatMessage
-from .serializers import ChatMessageSerializer
+from .serializers import ChatMessageSerializer, ChatInputSerializer, ChatSessionSerializer
 from .graph import get_graph
 from langchain_core.messages import HumanMessage, AIMessage
 
 class ChatView(generics.GenericAPIView):
+    serializer_class = ChatInputSerializer
+
     def post(self, request, *args, **kwargs):
         session_id = request.data.get('session_id')
         message_text = request.data.get('message')
 
+        session = None
         if session_id:
-            session = ChatSession.objects.get(pk=session_id)
-        else:
+            try:
+                session = ChatSession.objects.get(pk=session_id)
+            except ChatSession.DoesNotExist:
+                pass # If session_id is provided but doesn't exist, a new session will be created below
+
+        if not session:
             session = ChatSession.objects.create()
 
         # Save user message
@@ -25,15 +32,25 @@ class ChatView(generics.GenericAPIView):
 
         def stream_response():
             graph = get_graph()
-            ai_response = ""
+            full_ai_response_chunks = []
             for chunk in graph.stream({"messages": messages}):
-                if "messages" in chunk:
-                    for message in chunk["messages"]:
-                        ai_response += message.content
-                        yield message.content
+                if "__end__" in chunk:
+                    break
+                if "chatbot" in chunk:
+                    for message in chunk["chatbot"]["messages"]:
+                        content_to_yield = ""
+                        if hasattr(message, "content"):
+                            content_to_yield = message.content
+                        elif isinstance(message, dict) and "content" in message:
+                            content_to_yield = message["content"]
+                        
+                        if content_to_yield:
+                            full_ai_response_chunks.append(content_to_yield)
+                            yield content_to_yield
             
             # Save AI message
-            ChatMessage.objects.create(session=session, message=ai_response, is_user=False)
+            final_ai_response = "".join(full_ai_response_chunks)
+            ChatMessage.objects.create(session=session, message=final_ai_response, is_user=False)
 
         return StreamingHttpResponse(stream_response())
 

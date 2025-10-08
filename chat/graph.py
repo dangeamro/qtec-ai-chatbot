@@ -28,7 +28,8 @@ def get_weather(city: str):
 
 
 def get_graph():
-    llm = ChatGoogleGenerativeAI(model="gemini-pro", api_key=os.environ.get("GOOGLE_API_KEY"))
+    google_api_key = os.environ.get("GOOGLE_API_KEY")
+    llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", api_key=google_api_key)
     tools = [get_weather]
     llm_with_tools = llm.bind_tools(tools)
 
