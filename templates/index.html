@@ -21,7 +21,7 @@
 </head>
 <body>
     <div class="chat-container">
-        <div class="chat-header">Qtec AI Engineer Task (Chatbot)</div>
+        <div class="chat-header">Qtec AI Engineer Task (Chatbot) <span id="session-id-display"></span></div>
         <div class="chat-messages" id="chat-messages">
             <!-- Messages will be appended here -->
         </div>
@@ -112,6 +112,7 @@
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder('utf-8');
                 let receivedResponse = '';
+                let isFirstDataChunk = true; // Flag to track the first data chunk
 
                 while (true) {
                     const { done, value } = await reader.read();
@@ -121,11 +122,13 @@
                     const lines = chunk.split('\n');
                     for (const line of lines) {
                         if (line.startsWith('data: ')) {
-                            const data = line.substring(6);
-                            if (!sessionId) {
-                                sessionId = data; // First data chunk is the session ID
-                            } else {
-                                receivedResponse += data;
+                            const extractedData = line.substring(6);
+                            if (isFirstDataChunk && !isNaN(parseInt(extractedData))) { // This is the session ID
+                                sessionId = extractedData;
+                                document.getElementById('session-id-display').textContent = `Session ID - ${sessionId}`;
+                                isFirstDataChunk = false; // Mark that the first data chunk has been processed
+                            } else { // This is actual AI response content
+                                receivedResponse += extractedData;
                                 aiBubbleDiv.textContent = receivedResponse;
                                 chatMessages.scrollTop = chatMessages.scrollHeight;
                             }
