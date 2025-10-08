@@ -20,9 +20,16 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
     git clone https://github.com/dangeamro/qtec-ai-chatbot.git
     ```
 2.  **Create a virtual environment and activate it:**
+
+    **Windows:**
     ```bash
     python -m venv venv
     venv\Scripts\activate
+    ```
+    **Linux/macOS:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
     ```
 3.  **Install the dependencies:**
     ```bash
@@ -36,7 +43,11 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
     ```bash
     python manage.py migrate
     ```
-6.  **Run the development server:**
+6.  **Create a superuser:**
+    ```bash
+    python manage.py createsuperuser
+    ```
+7.  **Run the development server:**
     ```bash
     python manage.py runserver
     ```
