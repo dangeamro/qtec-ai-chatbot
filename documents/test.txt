@@ -1,0 +1,18 @@
+Document-Aware AI Chatbot Project Documentation
+
+Project Overview:
+This project involves building an intelligent chatbot that can reference uploaded documents to provide accurate, context-aware responses.
+
+Technical Architecture:
+Backend: Django 4.2 with Django REST Framework
+Database: PostgreSQL with pgvector extension for vector storage
+AI Orchestration: LangGraph for conversation management
+Embeddings: SentenceTransformers (all-MiniLM-L6-v2)
+LLM: Google Gemini 1.5 Flash
+
+Key Features:
+1. Document Upload & Processing: Accepts .txt files, splits into chunks, generates embeddings
+2. Semantic Search: Finds relevant document sections based on user queries
+3. Conversation Memory: Maintains chat history across sessions
+4. Streaming Responses: Real-time token-by-token response delivery
+

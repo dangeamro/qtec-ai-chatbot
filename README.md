@@ -17,7 +17,7 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/dangeamro/qtec-ai-chatbot.git
     ```
 2.  **Create a virtual environment and activate it:**
     ```bash
