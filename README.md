@@ -43,16 +43,23 @@ The chatbot allows users to upload `.txt` documents, which are then used as a kn
     ```bash
     python manage.py migrate
     ```
-6.  **Create a superuser:**
+6.  **Create an Admin User (Superuser):**
+    Run the following command to create an administrator account for the Django admin panel. Follow the prompts to set up your username, email, and password.
     ```bash
     python manage.py createsuperuser
     ```
+    You can access the Django admin panel at `http://127.0.0.1:8000/admin/` after starting the development server.
+
 7.  **Run the development server:**
     ```bash
     python manage.py runserver
     ```
 
 ## API Usage
+
+### Chat with the AI
+
+Access the chat interface by navigating to `http://127.0.0.1:8000/` in your web browser after starting the development server. Type your message in the input field and press "Send" or Enter to interact with the chatbot.
 
 ### Upload a document
 
