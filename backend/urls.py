@@ -17,11 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView
 from chat.views import SessionMessageView
+from backend import views
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='admin/', permanent=False)),
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('api/document/', include('document.urls')),
     path('api/chat/', include('chat.urls')),
